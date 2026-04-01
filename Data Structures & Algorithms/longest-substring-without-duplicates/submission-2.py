@@ -1,0 +1,17 @@
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        if len(s) < 2:
+            return len(s)
+        len_pos = {}
+        res = 1
+        for idx, c in enumerate(s):
+            if c not in len_pos:
+                len_pos[c] = (1, idx)
+            else:
+                longest, last_idx = len_pos[c]
+                len_pos[c] = (max(longest, idx - last_idx), idx)
+            res = max(res, len_pos[c][0])
+
+        if all(c==1 for _, (_, c) in len_pos.items()):
+            return len(s)
+        return res
